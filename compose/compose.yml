@@ -1,0 +1,128 @@
+services:
+
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: rabbitmq
+    volumes:
+      - ../rabbitmq/config:/etc/rabbitmq/
+      - ../rabbitmq/data:/var/lib/rabbitmq/
+      - ../logs/:/var/log/rabbitmq/
+    environment:
+      RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - planx
+
+  managing-service:
+    image: planx.toolbox.router.managing
+    container_name: managing-service
+    build:
+      context: ../services/managing-service/
+      dockerfile: Dockerfile
+    volumes:
+      - ../logs/:/logs/
+    ports:
+      - "8090:8090"
+    depends_on:
+      - rabbitmq
+    networks:
+      - planx
+
+  solving-service-pddl4j:
+    image: planx.toolbox.endpoint.solving:pddl4j
+    container_name: solving-service-pddl4j
+    build:
+      context: ../services/solving-service-pddl4j/
+      dockerfile: Dockerfile
+    volumes:
+      - ../logs/:/logs/
+    depends_on:
+      - rabbitmq
+    networks:
+      - planx
+
+  solving-service-pd:
+    image: planx.toolbox.endpoint.solving:pd
+    container_name: solving-service-pd
+    build:
+      context: ../services/solving-service-pd/
+      dockerfile: Dockerfile
+    volumes:
+      - ../logs/:/logs/
+    depends_on:
+      - rabbitmq
+    networks:
+      - planx
+
+  parsing-service:
+    image: planx.toolbox.transforming.parsing
+    container_name: parsing-service
+    build:
+      context: ../services/parsing-service/
+      dockerfile: Dockerfile
+    volumes:
+      - ../logs/:/logs/
+    depends_on:
+      - rabbitmq
+    networks:
+      - planx
+
+  converting-service:
+    image: planx.toolbox.transforming.converting
+    container_name: converting-service
+    build:
+      context: ../services/converting-service/
+      dockerfile: Dockerfile
+    volumes:
+      - ../logs/:/logs/
+    depends_on:
+      - rabbitmq
+    networks:
+      - planx
+
+  frontend-service:
+    image: planx.toolbox.endpoint.modelling
+    container_name: frontend-service
+    build:
+      context: ../services/frontend-service/
+      dockerfile: Dockerfile
+    depends_on:
+      - managing-service
+    ports:
+      - "4200:4200"
+    networks:
+      - planx
+
+  monitoring-service:
+    image: planx.toolbox.endpoint.monitoring
+    container_name: monitoring-service
+    build:
+      context: ../services/monitoring-service/
+      dockerfile: Dockerfile
+    depends_on:
+      - managing-service
+    ports:
+      - "5000:5000"
+    networks:
+      - planx
+
+#  plan-validation-service:
+#    image: planx.toolbox.system-management.plan-validation
+#    container_name: plan-validation-service
+#    build:
+#      context: ../services/plan-validation-service/
+#      dockerfile: Dockerfile
+#    volumes:
+#      - ../logs/:/logs/
+#    depends_on:
+#      - rabbitmq
+#    networks:
+#      - planx
+
+
+networks:
+  planx:
