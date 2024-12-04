@@ -2,7 +2,7 @@ FROM node:12.0.0-alpine AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY ./services/frontend-service .
 
 # --no-cache: download package index on-the-fly, no need to cleanup afterwards
 # --virtual: bundle packages, remove whole bundle at once, when done

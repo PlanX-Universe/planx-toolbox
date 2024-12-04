@@ -2,11 +2,13 @@
 FROM gradle:jdk14 AS builder
 
 WORKDIR /app
-COPY . .
+
+COPY ./services/parsing-service .
+
+COPY ./common/kotlin /common/kotlin
 
 # Build without tests
 RUN gradle -Pbuildprofile=COMPOSE -x test clean build --info
-
 
 # Runtime stage
 FROM openjdk:14

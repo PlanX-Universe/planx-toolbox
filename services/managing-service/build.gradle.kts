@@ -21,6 +21,7 @@ repositories {
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
+    implementation("org.planx:common:1.0")
     implementation("javax.websocket:javax.websocket-api:1.1")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("io.projectreactor.rabbitmq:reactor-rabbitmq:1.4.4.RELEASE")

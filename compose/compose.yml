@@ -1,5 +1,4 @@
 services:
-
   rabbitmq:
     image: rabbitmq:management-alpine
     container_name: rabbitmq
@@ -21,8 +20,8 @@ services:
     image: planx.toolbox.router.managing
     container_name: managing-service
     build:
-      context: ../services/managing-service/
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./services/managing-service/Dockerfile
     volumes:
       - ../logs/:/logs/
     ports:
@@ -36,8 +35,8 @@ services:
     image: planx.toolbox.endpoint.solving:pddl4j
     container_name: solving-service-pddl4j
     build:
-      context: ../services/solving-service-pddl4j/
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./services/solving-service-pddl4j/Dockerfile
     volumes:
       - ../logs/:/logs/
     depends_on:
@@ -49,8 +48,8 @@ services:
     image: planx.toolbox.endpoint.solving:pd
     container_name: solving-service-pd
     build:
-      context: ../services/solving-service-pd/
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./services/solving-service-pd/Dockerfile
     volumes:
       - ../logs/:/logs/
     depends_on:
@@ -62,8 +61,8 @@ services:
     image: planx.toolbox.transforming.parsing
     container_name: parsing-service
     build:
-      context: ../services/parsing-service/
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./services/parsing-service/Dockerfile
     volumes:
       - ../logs/:/logs/
     depends_on:
@@ -75,8 +74,8 @@ services:
     image: planx.toolbox.transforming.converting
     container_name: converting-service
     build:
-      context: ../services/converting-service/
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./services/converting-service/Dockerfile
     volumes:
       - ../logs/:/logs/
     depends_on:
@@ -88,8 +87,8 @@ services:
     image: planx.toolbox.endpoint.modelling
     container_name: frontend-service
     build:
-      context: ../services/frontend-service/
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./services/frontend-service/Dockerfile
     depends_on:
       - managing-service
     ports:
@@ -101,8 +100,8 @@ services:
     image: planx.toolbox.endpoint.monitoring
     container_name: monitoring-service
     build:
-      context: ../services/monitoring-service/
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./services/monitoring-service/Dockerfile
     depends_on:
       - managing-service
     ports:
@@ -114,15 +113,14 @@ services:
 #    image: planx.toolbox.system-management.plan-validation
 #    container_name: plan-validation-service
 #    build:
-#      context: ../services/plan-validation-service/
-#      dockerfile: Dockerfile
+#      context: ..
+#      dockerfile: ./services/plan-validation-service/Dockerfile
 #    volumes:
 #      - ../logs/:/logs/
 #    depends_on:
 #      - rabbitmq
 #    networks:
 #      - planx
-
 
 networks:
   planx:

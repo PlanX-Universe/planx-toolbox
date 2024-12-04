@@ -2,7 +2,10 @@
 FROM gradle:jdk14 AS builder
 
 WORKDIR /app
-COPY . .
+
+COPY ./services/solving-service-pd .
+
+COPY ./common/kotlin /common/kotlin
 
 # Build without tests
 RUN gradle -Pbuildprofile=COMPOSE -x test clean build --info
