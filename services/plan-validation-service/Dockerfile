@@ -1,6 +1,6 @@
 FROM aigupf/starter-kit:latest
 
-ENV TZ=Europe/Berlin
+
 ENV STAGE=COMPOSE
 
 #################################

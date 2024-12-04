@@ -13,7 +13,7 @@ RUN gradle -Pbuildprofile=COMPOSE -x test clean build --info
 # Runtime stage
 FROM openjdk:14
 
-ENV TZ=Europe/Berlin
+
 ENV STAGE=COMPOSE
 
 RUN groupadd -g 9999 planxuser && \

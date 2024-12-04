@@ -2,14 +2,12 @@ services:
   rabbitmq:
     image: rabbitmq:management-alpine
     container_name: rabbitmq
+    env_file:
+      - mutual.env
     volumes:
       - ../rabbitmq/config:/etc/rabbitmq/
       - ../rabbitmq/data:/var/lib/rabbitmq/
       - ../logs/:/var/log/rabbitmq/
-    environment:
-      RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
     ports:
       - 5672:5672
       - 15672:15672
@@ -19,6 +17,10 @@ services:
   managing-service:
     image: planx.toolbox.router.managing
     container_name: managing-service
+    env_file:
+      - mutual.env
+      - managing-service.env
+      - rabbitmq-kotlin.env
     build:
       context: ..
       dockerfile: ./services/managing-service/Dockerfile
@@ -34,6 +36,10 @@ services:
   solving-service-pddl4j:
     image: planx.toolbox.endpoint.solving:pddl4j
     container_name: solving-service-pddl4j
+    env_file:
+      - mutual.env
+      - solving-service-pddl4j.env
+      - rabbitmq-kotlin.env
     build:
       context: ..
       dockerfile: ./services/solving-service-pddl4j/Dockerfile
@@ -47,6 +53,10 @@ services:
   solving-service-pd:
     image: planx.toolbox.endpoint.solving:pd
     container_name: solving-service-pd
+    env_file:
+      - mutual.env
+      - solving-service-pd.env
+      - rabbitmq-kotlin.env
     build:
       context: ..
       dockerfile: ./services/solving-service-pd/Dockerfile
@@ -60,6 +70,10 @@ services:
   parsing-service:
     image: planx.toolbox.transforming.parsing
     container_name: parsing-service
+    env_file:
+      - mutual.env
+      - parsing-service.env
+      - rabbitmq-kotlin.env
     build:
       context: ..
       dockerfile: ./services/parsing-service/Dockerfile
@@ -73,6 +87,10 @@ services:
   converting-service:
     image: planx.toolbox.transforming.converting
     container_name: converting-service
+    env_file:
+      - mutual.env
+      - converting-service.env
+      - rabbitmq-kotlin.env
     build:
       context: ..
       dockerfile: ./services/converting-service/Dockerfile
@@ -86,6 +104,8 @@ services:
   frontend-service:
     image: planx.toolbox.endpoint.modelling
     container_name: frontend-service
+    env_file:
+      - mutual.env
     build:
       context: ..
       dockerfile: ./services/frontend-service/Dockerfile
@@ -99,6 +119,8 @@ services:
   monitoring-service:
     image: planx.toolbox.endpoint.monitoring
     container_name: monitoring-service
+    env_file:
+      - mutual.env
     build:
       context: ..
       dockerfile: ./services/monitoring-service/Dockerfile
@@ -112,6 +134,10 @@ services:
 #  plan-validation-service:
 #    image: planx.toolbox.system-management.plan-validation
 #    container_name: plan-validation-service
+#    env_file:
+#     - mutual.env
+#     - plan-validation-service.env
+#     - rabbitmq-kotlin.env
 #    build:
 #      context: ..
 #      dockerfile: ./services/plan-validation-service/Dockerfile
