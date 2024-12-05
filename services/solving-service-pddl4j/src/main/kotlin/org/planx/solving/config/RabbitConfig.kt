@@ -21,9 +21,6 @@ import org.springframework.util.ErrorHandler
 @Configuration
 class RabbitConfig {
 
-    @Autowired
-    lateinit var customErrorHandler: CustomErrorHandler
-
     @Bean
     fun connectionFactory(
         rabbitProperties: RabbitProperties,
@@ -47,11 +44,14 @@ class RabbitConfig {
     }
 
     @Bean
-    fun rabbitListenerContainerFactory(rabbitConnectionFactory: ConnectionFactory): SimpleRabbitListenerContainerFactory {
+    fun rabbitListenerContainerFactory(
+        rabbitConnectionFactory: ConnectionFactory,
+        customErrorHandler: CustomErrorHandler
+    ): SimpleRabbitListenerContainerFactory {
         val factory = SimpleRabbitListenerContainerFactory()
         factory.setConnectionFactory(rabbitConnectionFactory)
         factory.setMessageConverter(messageConverter())
-        factory.setErrorHandler(errorHandler())
+        factory.setErrorHandler(customErrorHandler)
         return factory
     }
 
@@ -77,10 +77,7 @@ class RabbitConfig {
         return template
     }
 
-    @Bean
-    fun errorHandler(): ErrorHandler {
-        return customErrorHandler
-    }
+
 
     @Bean
     fun objectMapper(): ObjectMapper {
