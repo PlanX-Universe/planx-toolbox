@@ -11,20 +11,17 @@ import org.springframework.util.ErrorHandler
 import org.planx.common.models.CustomErrorMessage
 
 @Component
-class CustomErrorHandler : ErrorHandler {
-    var logger = getLoggerFor<CustomErrorHandler>()
+class CustomErrorHandler(
+    private val rabbitTemplate: RabbitTemplate,
 
-    @Autowired
-    private lateinit var rabbitTemplate: RabbitTemplate
+    @Value("\${planx.messaging.error.topic}") private val errorTopicName: String,
+    @Value("\${planx.messaging.error.key}") private val errorRoutingKey: String,
+    @Value("\${planx.messaging.topic}") private val currentApplicationName: String
 
-    @Value("\${planx.messaging.error.topic}")
-    private lateinit var errorTopicName: String
+) : ErrorHandler {
 
-    @Value("\${planx.messaging.error.key}")
-    private lateinit var errorRoutingKey: String
+    private val logger = getLoggerFor<CustomErrorHandler>()
 
-    @Value("\${planx.messaging.topic}")
-    private lateinit var currentApplicationName: String
 
     override fun handleError(t: Throwable) {
         // t is typically ListenerExecutionFailedException if it comes from the Listener
