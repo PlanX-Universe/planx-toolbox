@@ -6,8 +6,8 @@ services:
       - mutual.env
     volumes:
       - ../rabbitmq/config:/etc/rabbitmq/
-      - ../rabbitmq/data:/var/lib/rabbitmq/
-      - ../logs/:/var/log/rabbitmq/
+      - planx_rabbitmq_data:/var/lib/rabbitmq/
+      - planx_logs:/var/log/rabbitmq/
     ports:
       - 5672:5672
       - 15672:15672
@@ -25,7 +25,7 @@ services:
       context: ..
       dockerfile: ./services/managing-service/Dockerfile
     volumes:
-      - ../logs/:/logs/
+      - planx_logs:/logs/
     ports:
       - "8090:8090"
     depends_on:
@@ -44,7 +44,7 @@ services:
       context: ..
       dockerfile: ./services/solving-service-pddl4j/Dockerfile
     volumes:
-      - ../logs/:/logs/
+      - planx_logs:/logs/
     depends_on:
       - rabbitmq
     networks:
@@ -61,7 +61,7 @@ services:
       context: ..
       dockerfile: ./services/solving-service-pd/Dockerfile
     volumes:
-      - ../logs/:/logs/
+      - planx_logs:/logs/
     depends_on:
       - rabbitmq
     networks:
@@ -78,7 +78,7 @@ services:
       context: ..
       dockerfile: ./services/parsing-service/Dockerfile
     volumes:
-      - ../logs/:/logs/
+      - planx_logs:/logs/
     depends_on:
       - rabbitmq
     networks:
@@ -95,7 +95,7 @@ services:
       context: ..
       dockerfile: ./services/converting-service/Dockerfile
     volumes:
-      - ../logs/:/logs/
+      - planx_logs:/logs/
     depends_on:
       - rabbitmq
     networks:
@@ -142,11 +142,15 @@ services:
 #      context: ..
 #      dockerfile: ./services/plan-validation-service/Dockerfile
 #    volumes:
-#      - ../logs/:/logs/
+#      - planx_logs:/logs/
 #    depends_on:
 #      - rabbitmq
 #    networks:
 #      - planx
+
+volumes:
+  planx_rabbitmq_data:
+  planx_logs:
 
 networks:
   planx:
