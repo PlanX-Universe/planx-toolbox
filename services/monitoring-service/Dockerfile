@@ -19,6 +19,10 @@ RUN npm install && \
 
 FROM nginx:alpine
 
+LABEL org.opencontainers.image.source=https://github.com/PlanX-Universe/planx-toolbox
+LABEL org.opencontainers.image.description="PlanX Toolbox Monitoring Service"
+LABEL org.opencontainers.image.licenses=MIT
+
 RUN addgroup -g 9999 -S angularuser && \
     adduser -u 9999 -S angularuser -G angularuser
 

@@ -15,7 +15,7 @@ services:
       - planx
 
   managing-service:
-    image: planx.toolbox.router.managing
+    image: ghcr.io/planx-universe/planx-toolbox/managing:latest
     container_name: managing-service
     env_file:
       - mutual.env
@@ -34,7 +34,7 @@ services:
       - planx
 
   solving-service-pddl4j:
-    image: planx.toolbox.endpoint.solving:pddl4j
+    image: ghcr.io/planx-universe/planx-toolbox/solving-pddl4j:latest
     container_name: solving-service-pddl4j
     env_file:
       - mutual.env
@@ -51,7 +51,7 @@ services:
       - planx
 
   solving-service-pd:
-    image: planx.toolbox.endpoint.solving:pd
+    image: ghcr.io/planx-universe/planx-toolbox/solving-pd:latest
     container_name: solving-service-pd
     env_file:
       - mutual.env
@@ -68,7 +68,7 @@ services:
       - planx
 
   parsing-service:
-    image: planx.toolbox.transforming.parsing
+    image: ghcr.io/planx-universe/planx-toolbox/parsing:latest
     container_name: parsing-service
     env_file:
       - mutual.env
@@ -85,7 +85,7 @@ services:
       - planx
 
   converting-service:
-    image: planx.toolbox.transforming.converting
+    image: ghcr.io/planx-universe/planx-toolbox/converting:latest
     container_name: converting-service
     env_file:
       - mutual.env
@@ -102,7 +102,7 @@ services:
       - planx
 
   frontend-service:
-    image: planx.toolbox.endpoint.modelling
+    image: ghcr.io/planx-universe/planx-toolbox/frontend:latest
     container_name: frontend-service
     env_file:
       - mutual.env
@@ -117,7 +117,7 @@ services:
       - planx
 
   monitoring-service:
-    image: planx.toolbox.endpoint.monitoring
+    image: ghcr.io/planx-universe/planx-toolbox/monitoring:latest
     container_name: monitoring-service
     env_file:
       - mutual.env
@@ -132,7 +132,7 @@ services:
       - planx
 
 #  plan-validation-service:
-#    image: planx.toolbox.system-management.plan-validation
+#    image: ghcr.io/planx-universe/planx-toolbox/plan-validation:latest
 #    container_name: plan-validation-service
 #    env_file:
 #     - mutual.env
