@@ -20,5 +20,10 @@ enum class Planner(val value: String) {
     /**
      * The HC Anytime (Hill Climbing Anytime Planner).
      */
-    HCAnytime("hc-anytime")
+    HCAnytime("hc-anytime"),
+
+    /**
+     * The Planning.Domains remote API planner
+     */
+    PlanningDomainsRemote("pd-remote")
 }

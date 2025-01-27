@@ -131,22 +131,22 @@ services:
     networks:
       - planx
 
-#  plan-validation-service:
-#    image: ghcr.io/planx-universe/planx-toolbox/plan-validation:latest
-#    container_name: plan-validation-service
-#    env_file:
-#     - mutual.env
-#     - plan-validation-service.env
-#     - rabbitmq-kotlin.env
-#    build:
-#      context: ..
-#      dockerfile: ./services/plan-validation-service/Dockerfile
-#    volumes:
-#      - planx_logs:/logs/
-#    depends_on:
-#      - rabbitmq
-#    networks:
-#      - planx
+  plan-validation-service:
+    image: ghcr.io/planx-universe/planx-toolbox/plan-validation:latest
+    container_name: plan-validation-service
+    env_file:
+     - mutual.env
+     - plan-validation-service.env
+     - rabbitmq-kotlin.env
+    build:
+      context: ..
+      dockerfile: ./services/plan-validation-service/Dockerfile
+    volumes:
+      - planx_logs:/logs/
+    depends_on:
+      - rabbitmq
+    networks:
+      - planx
 
 volumes:
   planx_rabbitmq_data:

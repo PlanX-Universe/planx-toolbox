@@ -51,6 +51,7 @@ class PddlSolvingService {
             Planner.FF -> fr.uga.pddl4j.planners.Planner.Name.FF
             Planner.FFAnytime -> fr.uga.pddl4j.planners.Planner.Name.FFAnytime
             Planner.HCAnytime -> fr.uga.pddl4j.planners.Planner.Name.HCAnytime
+            else -> throw NotImplementedError("Planner $plannerName is not supported yet!")
         }
         logger.info("Planner: ${stateSpacePlanner.name}")
         val planner: AbstractStateSpacePlanner = stateSpacePlannerFactory.getPlanner(stateSpacePlanner)
